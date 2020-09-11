@@ -96,7 +96,8 @@ module RailsParam
     def coerce(param, type, options = {})
       begin
         return nil if param.nil?
-        return param if (param.is_a?(type) rescue raise ArgumentError)
+        return param if (param.is_a?(type) rescue false)
+        raise ArgumentError unless (param.is_a?(type))
         if (param.is_a?(Array) && type != Array) || ((param.is_a?(Hash) || param.is_a?(ActionController::Parameters)) && type != Hash)
           raise ArgumentError
         end
